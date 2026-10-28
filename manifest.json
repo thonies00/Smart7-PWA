@@ -1,0 +1,20 @@
+{
+  "name": "SMART-7 Sinergitas Karakter",
+  "short_name": "SMART-7",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#147D3E",
+  "icons": [
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Muhammadiyah_logo.svg/192px-Muhammadiyah_logo.svg.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Muhammadiyah_logo.svg/512px-Muhammadiyah_logo.svg.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
