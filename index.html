@@ -32,26 +32,43 @@
       100% { transform: scale(0.95); opacity: 0.8; }
     }
 
-    /* Tombol Refresh Melayang */
+    /* Tombol Refresh Glassmorphism Premium */
     #btn-refresh {
       position: fixed;
-      bottom: 70px; /* Posisi aman di atas footer */
+      bottom: 40px; 
       right: 20px;
-      width: 48px;
-      height: 48px;
-      background-color: #147D3E;
-      color: white;
-      border-radius: 50%;
+      padding: 10px 18px;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 30px;
+      color: #147D3E;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
       display: flex;
       align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      gap: 8px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
       z-index: 9998;
       cursor: pointer;
-      transition: transform 0.2s ease, background-color 0.2s ease;
+      transition: all 0.3s ease;
     }
-    #btn-refresh:active { transform: scale(0.9); background-color: #0f612f; }
-    #btn-refresh svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    #btn-refresh:active {
+      transform: scale(0.95);
+      background: rgba(255, 255, 255, 0.9);
+    }
+    #btn-refresh svg { 
+      width: 18px; height: 18px; fill: none; stroke: currentColor; 
+      stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; 
+    }
+    
+    /* Animasi putar ikon saat ditekan */
+    .spin-icon {
+      animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
@@ -62,15 +79,15 @@
     <p>Memuat SMART-7...</p>
   </div>
 
-  <!-- Tombol Refresh -->
+  <!-- Tombol Refresh Kaca Melayang -->
   <div id="btn-refresh" onclick="refreshApp()" aria-label="Muat Ulang Aplikasi">
-    <svg viewBox="0 0 24 24">
+    <svg id="refresh-svg" viewBox="0 0 24 24">
       <path d="M21 2v6h-6"></path>
       <path d="M3 12a9 9 0 1 0 2.6-6.4L21 8"></path>
     </svg>
+    <span>Perbarui</span>
   </div>
 
-  <!-- Iframe dengan penambahan izin web-share -->
   <iframe id="appFrame" src="https://script.google.com/macros/s/AKfycbyj8JNnnXQiIpTvoIA-xt-kDW2zNK2hQX-zeH8iCi7hslxeoXEZJ6lJUldmGoaArLLsGg/exec" allowfullscreen allow="web-share; clipboard-write"></iframe>
   
   <script>
@@ -78,24 +95,32 @@
       navigator.serviceWorker.register('sw.js');
     }
     
-    // Fungsi untuk memuat ulang iframe secara paksa saat tombol ditekan
     function refreshApp() {
       const loader = document.getElementById('custom-loader');
       const frame = document.getElementById('appFrame');
+      const icon = document.getElementById('refresh-svg');
       
+      // Tambahkan efek putar pada ikon
+      icon.classList.add('spin-icon');
+      
+      // Tampilkan kembali layar putih memuat
       loader.style.display = 'flex';
       setTimeout(() => loader.style.opacity = '1', 10); 
       
+      // Memuat ulang iframe
       frame.src = frame.src; 
     }
 
-    // Menghilangkan Layar Pemuat setelah iframe Google selesai dimuat
     document.getElementById('appFrame').onload = function() {
       const loader = document.getElementById('custom-loader');
+      const icon = document.getElementById('refresh-svg');
+      
       loader.style.opacity = '0';
-      setTimeout(() => { loader.style.display = 'none'; }, 600);
+      setTimeout(() => { 
+        loader.style.display = 'none'; 
+        icon.classList.remove('spin-icon'); // Hentikan putaran ikon
+      }, 600);
     };
   </script>
 </body>
-                          </html>
-                          
+</html>
